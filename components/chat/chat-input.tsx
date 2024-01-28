@@ -5,9 +5,12 @@ import qs from "query-string"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
-import { Plus, Smile } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Input } from "../ui/input";
 import axios from "axios";
+import { useModal } from "@/hooks/use-modal-store";
+import EmojiPicker from "../emoji-picker";
+import { useRouter } from "next/navigation";
 
 interface ChatInputProps {
   apiUrl: string;
@@ -21,6 +24,8 @@ const formSchema = z.object({
 });
 
 const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
+  const {onOpen} = useModal()
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,6 +42,8 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
         query,
       })
       await axios.post(url,values)
+      form.reset()
+      router.refresh()
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +60,7 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                 <div className="relative p-4 pb-6">
                   <button
                     type="button"
-                    onClick={() => {}}
+                    onClick={() => onOpen("messageFile",{apiUrl,query})}
                     className="absolute top-7 left-8 h-[24px] w-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center"
                   >
                     <Plus className="text-white dark:text-[#313338]" />
@@ -68,7 +75,7 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                   {...field}
                   />
                   <div className="absolute top-7 right-8">
-                  <Smile className="w-4 h-8" />
+                  <EmojiPicker onChange={(emoji:string)=>field.onChange(`${field.value} ${emoji}`)}/>
                   </div>
                 </div>
               </FormControl>
