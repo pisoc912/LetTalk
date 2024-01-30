@@ -17,22 +17,31 @@ export const LeaveModal = () => {
   const { isOpen, onOpen, onClose, type, data } = useModal();
   const isModalOpen = isOpen && type === "leaveServer";
   const { server } = data;
-  const router = useRouter()
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const onClick =async () => {
+  const onClick = async () => {
     try {
-      setIsLoading(true)
-      await axios.patch(`/api/servers/${server?.id}/leave`)
-      onClose()
-      router.refresh()
-      router.push("/")
+      setIsLoading(true);
+      await axios.patch(`/api/servers/${server?.id}/leave`);
+      onClose();
+      router.refresh();
+      router.push("/");
     } catch (error) {
       console.log(error);
-    }finally{
-      setIsLoading(false)
+      if(axios.isAxiosError(error)){
+        setError(error.response?.data || "An error occurred");
+        setTimeout(()=>{
+          setError("")
+        },3000)
+      }else{
+        setError("An unexpected error occurred")
+      }
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -49,6 +58,7 @@ export const LeaveModal = () => {
             ?
           </DialogDescription>
         </DialogHeader>
+        {error && <div className="text-red-500 text-center">{error}</div>}
         <DialogFooter className="bg-gray-100 px-6 py-4">
           <div className="flex items-center justify-between w-full">
             <Button disabled={isLoading} variant="ghost" onClick={onClose}>
