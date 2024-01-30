@@ -1,0 +1,82 @@
+.homeLayout {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.authLayoutContent {
+    position: relative;
+    z-index: 1;
+    color: #FFFFFF;
+    text-align: center;
+    max-width: 800px;
+    line-height: 3;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    padding-bottom: 4rem;
+}
+
+.authLayoutContent p {
+    margin-bottom: 1em;
+    font-size: 16px;
+
+}
+
+.authLayoutContent h1 {
+    text-align: center;
+    font-size: 3em;
+    font-weight: bold;
+    color: #e8dea8;
+    margin-bottom: 2rem;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.demoButton{
+    background-color: dodgerblue;
+    border-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: relative;
+    z-index: 2;
+    margin-top: 1em;
+    font-weight: 600;
+}
+
+.demoButton:hover{
+    background-color:mediumslateblue;
+}
+
+.authLayoutContent h6{
+    font-size: 14px;
+    font-weight: 600;
+    color:darkgray;
+
+}
+
+@media (max-width:768px) {
+    .homeLayout {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .homeLayout h1 {
+        font-size: 20px;
+        margin-bottom: 1rem;
+    }
+
+    .homeLayout p {
+        font-size: 12px;
+    }
+
+    .authLayoutContent {
+        padding: 0%;
+        max-width: 600px;
+        line-height: 1.5;
+        margin-bottom: 1em;
+    }
+}
+

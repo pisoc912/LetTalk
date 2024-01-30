@@ -1,11 +1,11 @@
 import React, { ReactNode } from "react";
-import "./styles.css"; // 引入CSS文件
+import "./styles.css";
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="authLayout">
       <div className="backgroundImage" />
-      <div className="authLayoutContent">
+      {/* <div className="authLayoutContent">
           <h1>Imaging a placing...</h1>
         <p>
           ...where you can belong to any school club, any gaming group, or a
@@ -16,8 +16,8 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
           A place where strangers can become acquaintances...or maybe even
           friends.
         </p>
-      </div>
-      <div>{children}</div>
+      </div> */}
+      {children}
     </div>
   );
 };
